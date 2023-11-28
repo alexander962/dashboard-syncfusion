@@ -20,14 +20,14 @@ import { Header } from '../components';
 const Calendar = () => {
   const storedData = localStorage.getItem('calendarData');
   const [scheduleData, setScheduleData] = useState(storedData ? JSON.parse(storedData) : []);
-  const [count, setCount] = useState(0);
 
   useEffect(() => {
     localStorage.setItem('calendarData', JSON.stringify(scheduleData));
   }, [scheduleData]);
 
   const handleActionComplete = args => {
-    if (args.requestType === 'eventCreated') {
+    console.log(args);
+    if (args.requestType === 'eventCreated' || args.requestType === 'eventChanged') {
       localStorage.setItem('calendarData', JSON.stringify([...scheduleData]));
     } else if (args.requestType === 'eventRemoved') {
       localStorage.setItem('calendarData', JSON.stringify([...scheduleData]));
