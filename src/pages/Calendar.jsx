@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ScheduleComponent,
   ViewsDirective,
@@ -14,17 +14,34 @@ import {
 } from '@syncfusion/ej2-react-schedule';
 import { DatePickerComponent } from '@syncfusion/ej2-react-calendars';
 
-import { scheduleData } from '../data/dummy';
+import { scheduleDataOuter } from '../data/calendarData';
 import { Header } from '../components';
 
 const Calendar = () => {
+  const storedData = localStorage.getItem('calendarData');
+  const [scheduleData, setScheduleData] = useState(storedData ? JSON.parse(storedData) : []);
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    localStorage.setItem('calendarData', JSON.stringify(scheduleData));
+  }, [scheduleData]);
+
+  const handleActionComplete = args => {
+    if (args.requestType === 'eventCreated') {
+      localStorage.setItem('calendarData', JSON.stringify([...scheduleData]));
+    } else if (args.requestType === 'eventRemoved') {
+      localStorage.setItem('calendarData', JSON.stringify([...scheduleData]));
+    }
+  };
+
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
       <Header category="App" title="Calendar" />
       <ScheduleComponent
         height="650px"
         eventSettings={{ dataSource: scheduleData }}
-        selectedDate={new Date(2021, 0, 10)}
+        selectedDate={new Date()}
+        actionComplete={handleActionComplete}
       >
         <Inject services={[Day, Week, WorkWeek, Month, Agenda, Resize, DragAndDrop]} />
       </ScheduleComponent>
