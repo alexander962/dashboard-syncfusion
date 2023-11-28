@@ -12,7 +12,6 @@ import {
   Resize,
   DragAndDrop,
 } from '@syncfusion/ej2-react-schedule';
-import { DatePickerComponent } from '@syncfusion/ej2-react-calendars';
 
 import { scheduleDataOuter } from '../data/calendarData';
 import { Header } from '../components';
@@ -20,10 +19,6 @@ import { Header } from '../components';
 const Calendar = () => {
   const storedData = localStorage.getItem('calendarData');
   const [scheduleData, setScheduleData] = useState(storedData ? JSON.parse(storedData) : []);
-
-  useEffect(() => {
-    localStorage.setItem('calendarData', JSON.stringify(scheduleData));
-  }, [scheduleData]);
 
   const handleActionComplete = args => {
     console.log(args);
