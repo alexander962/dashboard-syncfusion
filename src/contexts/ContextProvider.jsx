@@ -3,7 +3,7 @@ import React, { createContext, useContext, useState } from 'react';
 const StateContext = createContext();
 
 const initialState = {
-  chart: false,
+  chat: false,
   cart: false,
   userProfile: false,
   notification: false,
@@ -21,18 +21,12 @@ export const ContextProvider = ({ children }) => {
 
   const setMode = e => {
     setCurrentMode(e.target.value);
-
     localStorage.setItem('themeMode', e.target.value);
-
-    setThemeSettings(false);
   };
 
   const setColor = color => {
     setCurrentColor(color);
-
     localStorage.setItem('colorMode', color);
-
-    setThemeSettings(false);
   };
 
   const handleClick = clicked => {
@@ -55,6 +49,7 @@ export const ContextProvider = ({ children }) => {
         setThemeSettings,
         setMode,
         setColor,
+        initialState,
       }}
     >
       {children}
